@@ -1,0 +1,1 @@
+import { LOCATOR_CART } from "./elements";
