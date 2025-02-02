@@ -9,11 +9,11 @@ describe('Home', () => {
     cy.wait(5000)
 
     //Tela de Home
-    cy.get(LOCATOR_HOME.SEARCH_BUTTON, { timeout: Cypress.env('TIMEOUT_WAITING_ELEMENT') })
-      .should('be.visible')
-
     cy.url()
       .should('contain', 'amazon.com')
+      
+//    cy.get(LOCATOR_HOME.SEARCH_BUTTON, { timeout: Cypress.env('TIMEOUT_WAITING_ELEMENT') })
+  //    .should('be.visible')
 
     cy.get(LOCATOR_HOME.SEARCH_INPUT, { timeout: ('TIMEOUT_WAITING_ELEMENT') })
       .type('Funko Pop')

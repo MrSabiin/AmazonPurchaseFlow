@@ -1,0 +1,23 @@
+{
+  "name": "amazonpurchaseflow",
+  "version": "1.0.0",
+  "description": "O básico de automação utilizando o cypress com Page Objects:",
+  "main": "cypress.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrSabiin/AmazonPurchaseFlow.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MrSabiin/AmazonPurchaseFlow/issues"
+  },
+  "homepage": "https://github.com/MrSabiin/AmazonPurchaseFlow#readme",
+  "dependencies": {
+    "cypress": "^14.0.1"
+  }
+}
