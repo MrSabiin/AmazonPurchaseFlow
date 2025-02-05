@@ -15,7 +15,7 @@ describe('Home', () => {
     cy.url()
       .should('contain', 'amazon.com')
 
-    cy.get(LOCATOR_HOME.SEARCH_INPUT, { timeout: ('TIMEOUT_WAITING_ELEMENT') })
+    cy.get(LOCATOR_HOME.SEARCH_INPUT, { timeout: Cypress.env('TIMEOUT_WAITING_ELEMENT') })
       .type('Funko Pop')
 
     cy.get(LOCATOR_HOME.SEARCH_BUTTON, { timeout: Cypress.env('TIMEOUT_WAITING_ELEMENT') })
@@ -39,43 +39,19 @@ describe('Home', () => {
           .then($element => {
             const nameProductScreen = $element.text().trim()
             cy.log(nameProductScreen)
-            expect(nameProduct).be.equal(nameProductScreen)
+            expect(nameProduct).be.equal(nameProductScreen) //Após a pesquisa do primeiro  produto, pegar o nome do produto, guardar numa variável e comparar se quando clicar no produto está o produto correto e o texto também
           })
 
         cy.get(LOCATOR_PRODUCT.ADD_TO_CART_BUTTON, { timeout: Cypress.env('TIMEOUT_WAITING_ELEMENT') })
           .click()
 
-        /*cy.get(LOCATOR_PRODUCT.NO_COVERAGE, { timeout: Cypress.env('TIMEOUT_WAITING_ELEMENT') })
-          .click()
+      })
 
-        cy.wait(10000)
-        cy.get(LOCATOR_PRODUCT.BTN_CART, { timeout: Cypress.env('TIMEOUT_WAITING_ELEMENT') })
-        .eq(0)
-        .click()
-        
-        //Tela Carrinho
-        cy.get(LOCATOR_CART.SCREEN_CART, { timeout: Cypress.env('TIMEOUT_WAITING_ELEMENT') }) //mudar nome do elemento para Quantidade de itens no carrinho
-        .then($element => {
-          const nameProductCartScreen = $element.text().trim()
-          cy.log(nameProductCartScreen)
-        })
-        
-        cy.get(LOCATOR_CART.CLOSE_ORDER, { timeout: Cypress.env('TIMEOUT_WAITING_ELEMENT') })
-        .click()
-        
-        cy.wait(5000)
-        
-        
-        cy.get(LOCATOR_CART.HOME_ICON, { timeout: Cypress.env('TIMEOUT_WAITING_ELEMENT') })
-        .click()
-        
-          */
-        })
     //Segundo produto
     cy.get(LOCATOR_HOME.SEARCH_BUTTON, { timeout: Cypress.env('TIMEOUT_WAITING_ELEMENT') })
       .should('be.visible')
 
-    cy.get(LOCATOR_HOME.SEARCH_INPUT, { timeout: ('TIMEOUT_WAITING_ELEMENT') })
+    cy.get(LOCATOR_HOME.SEARCH_INPUT, { timeout: Cypress.env('TIMEOUT_WAITING_ELEMENT') })
       .type('Jogo The Mind')
 
     cy.get(LOCATOR_HOME.SEARCH_BUTTON, { timeout: Cypress.env('TIMEOUT_WAITING_ELEMENT') })
@@ -91,14 +67,33 @@ describe('Home', () => {
           .eq(1)
           .click()
 
+        cy.get(LOCATOR_PRODUCT.ADD_TO_CART_BUTTON, { timeout: Cypress.env('TIMEOUT_WAITING_ELEMENT') })
+          .click()
+
         cy.wait(7000)
 
-        cy.get(LOCATOR_CART.SCREEN_CART, { timeout: Cypress.env('TIMEOUT_WAITING_ELEMENT') }) //mudar nome do elemento para Quantidade de itens no carrinho
+        cy.get(LOCATOR_CART.CART_QUANTITY, { timeout: Cypress.env('TIMEOUT_WAITING_ELEMENT') })
           .then($element => {
-            const nameProductCartScreen = $element.text().trim()
-            cy.log(nameProductCartScreen)
-            .expect(nameProductCartScreen)
+            const numberProductCartScreen = $element.text().trim()
+            cy.log(numberProductCartScreen)
+            cy.get(LOCATOR_CART.CART, { timeout: Cypress.env('TIMEOUT_WAITING_ELEMENT') }) // Após ter adicionado produtos no carrinho, pegar o valor e guardar numa variável para comparar fazer um asserts
+              .click()
+
+            cy.get(LOCATOR_CART.CART_SUBPRODUCTS, { timeout: Cypress.env('TIMEOUT_WAITING_ELEMENT') })
+              .then($element => {
+                const subproducts = $element.text().match(/\d+/)[0];
+                cy.log(subproducts)
+
+                expect(numberProductCartScreen).eq(subproducts) //Validar que foi adicionado 2 produtos no carrinho e quando acessar a tela do carrinho, ter 2 produtos adicionados
+
+              })
           })
+
+
+        //cy.get(LOCATOR_CART.CLOSE_ORDER, { timeout: Cypress.env('TIMEOUT_WAITING_ELEMENT') })
+        //.click({force: true})
+
+
 
       })
   });
